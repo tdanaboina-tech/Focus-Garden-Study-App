@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Study Garden"
+description = "A calm study companion for students: focus with an animated Pomodoro scene, layered ambient sound, a growing plant garden, notes alongside uploaded study files, study-time tracking, and a weekly timetable."
+version = "1.0.0"
+id = "artifacts/study-garden"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20008
+
+[services.development]
+run = "pnpm --filter @workspace/study-garden run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/study-garden", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/study-garden/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20008"
+BASE_PATH = "/"
